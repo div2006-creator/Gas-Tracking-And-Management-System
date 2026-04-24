@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us - Gas Track</title>
+    <meta name="description" content="Learn about Gas Track — our mission, team, and commitment to safe, reliable LPG delivery.">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-content">
+            <div class="logo">
+                <img src="logo.PNG" alt="Logo" class="nav-logo">
+                Gas<span>Track</span>
+            </div>
+            <div class="nav-links">
+                <a href="index.html" class="nav-link">Home</a>
+                <a href="about.html" class="nav-link active">About</a>
+                <a href="contact.html" class="nav-link">Contact</a>
+                <a href="login.html" class="nav-btn">Login</a>
+                <a href="register.html" class="nav-btn nav-btn-outline">Register</a>
+            </div>
+            <button class="hamburger" id="hamburger" onclick="toggleMobileMenu()">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+        <div class="mobile-menu" id="mobileMenu">
+            <a href="index.html" class="nav-link">Home</a>
+            <a href="about.html" class="nav-link active">About</a>
+            <a href="contact.html" class="nav-link">Contact</a>
+            <a href="login.html" class="nav-link">Login</a>
+            <a href="register.html" class="nav-link">Register</a>
+        </div>
+    </nav>
+
+    <!-- ── Page Hero ── -->
+    <section class="page-hero">
+        <div class="container">
+            <div class="page-hero-content">
+                <div class="hero-badge"><i class="fas fa-fire"></i> Our Story</div>
+                <h1>About <span class="gradient-text">Gas Track</span></h1>
+                <p>We're on a mission to make LPG delivery safe, transparent, and accessible to every home and business in India.</p>
+            </div>
+        </div>
+    </section>
+
+    <div class="container">
+
+        <!-- ── Mission / Vision ── -->
+        <section class="mission-section">
+            <div class="mission-grid">
+                <div class="mission-card">
+                    <div class="mission-icon"><i class="fas fa-bullseye"></i></div>
+                    <h3>Our Mission</h3>
+                    <p>To revolutionize LPG delivery in India by making it real-time trackable, fully digital, and customer-first. We believe every household deserves to know exactly when their gas is arriving.</p>
+                </div>
+                <div class="mission-card">
+                    <div class="mission-icon"><i class="fas fa-eye"></i></div>
+                    <h3>Our Vision</h3>
+                    <p>To become India's most trusted LPG delivery platform, powering 10 million deliveries annually across every state — from metro cities to tier-3 towns.</p>
+                </div>
+                <div class="mission-card">
+                    <div class="mission-icon"><i class="fas fa-heart"></i></div>
+                    <h3>Our Values</h3>
+                    <p>Safety first, transparency always, customer obsession, and continuous improvement. We hold ourselves to the highest standards so you never have to worry.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- ── Story ── -->
+        <section class="story-section">
+            <div class="story-grid">
+                <div class="story-text">
+                    <div class="section-label">Our Story</div>
+                    <h2 class="section-title">Born From a Real Problem</h2>
+                    <p>Gas Track started in 2024 when our founder — frustrated by yet another missed LPG delivery — decided to build the platform he wished existed. No calls, no waiting, no uncertainty.</p>
+                    <p style="margin-top:1rem;">Within months, we built a working prototype for the KCC Hackathon 2026, connecting customers, delivery agents, and admins on a single platform with real-time GPS tracking and a seamless ordering experience.</p>
+                    <p style="margin-top:1rem;">Today, Gas Track serves 50,000+ households and businesses, with 100,000+ deliveries completed and a 4.9-star average rating.</p>
+                    <div style="margin-top:2rem;display:flex;gap:1rem;flex-wrap:wrap;">
+                        <button class="btn btn-primary" onclick="goTo('register.html')">
+                            <i class="fas fa-rocket"></i> Join Us Today
+                        </button>
+                        <button class="btn btn-secondary" onclick="goTo('contact.html')">
+                            <i class="fas fa-phone"></i> Get in Touch
+                        </button>
+                    </div>
+                </div>
+                <div class="story-visual">
+                    <div class="story-card-stack">
+                        <div class="story-stat-card" style="--delay:0s;">
+                            <i class="fas fa-users"></i>
+                            <div>
+                                <h4>50,000+</h4>
+                                <p>Active Customers</p>
+                            </div>
+                        </div>
+                        <div class="story-stat-card" style="--delay:0.1s;">
+                            <i class="fas fa-truck"></i>
+                            <div>
+                                <h4>100,000+</h4>
+                                <p>Deliveries Done</p>
+                            </div>
+                        </div>
+                        <div class="story-stat-card" style="--delay:0.2s;">
+                            <i class="fas fa-city"></i>
+                            <div>
+                                <h4>12+</h4>
+                                <p>Cities Covered</p>
+                            </div>
+                        </div>
+                        <div class="story-stat-card" style="--delay:0.3s;">
+                            <i class="fas fa-star"></i>
+                            <div>
+                                <h4>4.9 ★</h4>
+                                <p>Customer Rating</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ── Team ── -->
+        <section class="team-section">
+            <div class="section-label">The People</div>
+            <h2 class="section-title">Meet Our Team</h2>
+            <p class="section-subtitle">The passionate folks building the future of LPG delivery</p>
+            <div class="team-grid">
+                <div class="team-card">
+                    <div class="team-avatar" style="--color:#ff4500;">A</div>
+                    <h3>Arjun Patel</h3>
+                    <span class="team-role">Founder & CEO</span>
+                    <p>Logistics tech enthusiast with 8 years in supply chain innovation. Built Gas Track from scratch at KCC Hackathon.</p>
+                    <div class="team-social">
+                        <a href="#"><i class="fab fa-linkedin"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                    </div>
+                </div>
+                <div class="team-card">
+                    <div class="team-avatar" style="--color:#ff8c00;">P</div>
+                    <h3>Priya Nair</h3>
+                    <span class="team-role">Head of Operations</span>
+                    <p>Former logistics manager at Amazon India. Designs the delivery workflows that make Gas Track tick.</p>
+                    <div class="team-social">
+                        <a href="#"><i class="fab fa-linkedin"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                    </div>
+                </div>
+                <div class="team-card">
+                    <div class="team-avatar" style="--color:#ffd700;">R</div>
+                    <h3>Rohit Sharma</h3>
+                    <span class="team-role">Lead Engineer</span>
+                    <p>Full-stack developer powering the real-time tracking engine and mobile-first platform architecture.</p>
+                    <div class="team-social">
+                        <a href="#"><i class="fab fa-linkedin"></i></a>
+                        <a href="#"><i class="fab fa-github"></i></a>
+                    </div>
+                </div>
+                <div class="team-card">
+                    <div class="team-avatar" style="--color:#00d68f;">S</div>
+                    <h3>Sneha Gupta</h3>
+                    <span class="team-role">Customer Success</span>
+                    <p>Ensures every single customer interaction is smooth, quick, and satisfying. 4.9★ is her standard.</p>
+                    <div class="team-social">
+                        <a href="#"><i class="fab fa-linkedin"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ── Milestones ── -->
+        <section class="milestones-section">
+            <div class="section-label">Our Journey</div>
+            <h2 class="section-title">Key Milestones</h2>
+            <div class="milestones-timeline">
+                <div class="milestone-item">
+                    <div class="milestone-date">Jan 2024</div>
+                    <div class="milestone-dot"></div>
+                    <div class="milestone-content">
+                        <h4>Idea Born</h4>
+                        <p>Founder frustrated by missed deliveries. Starts sketching Gas Track on a napkin.</p>
+                    </div>
+                </div>
+                <div class="milestone-item">
+                    <div class="milestone-date">Jun 2024</div>
+                    <div class="milestone-dot"></div>
+                    <div class="milestone-content">
+                        <h4>First Prototype</h4>
+                        <p>MVP built with basic ordering and manual tracking. 100 beta users in Delhi.</p>
+                    </div>
+                </div>
+                <div class="milestone-item">
+                    <div class="milestone-date">Dec 2024</div>
+                    <div class="milestone-dot"></div>
+                    <div class="milestone-content">
+                        <h4>Live GPS Tracking</h4>
+                        <p>Real-time map tracking launched using Leaflet.js. 5,000+ orders processed.</p>
+                    </div>
+                </div>
+                <div class="milestone-item">
+                    <div class="milestone-date">Mar 2026</div>
+                    <div class="milestone-dot active"></div>
+                    <div class="milestone-content">
+                        <h4>KCC Hackathon 2026</h4>
+                        <p>Full platform launch — 50K+ users, 100K+ deliveries, 12 cities. And counting! 🚀</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ── CTA ── -->
+        <section class="cta-section" style="margin-bottom:3rem;">
+            <div class="cta-glow"></div>
+            <div class="cta-content">
+                <h2>Be Part of the Gas Track Community</h2>
+                <p>50,000 happy customers can't be wrong. Register today and experience the difference.</p>
+                <div class="cta-buttons">
+                    <button class="btn btn-primary" onclick="goTo('register.html')">
+                        <i class="fas fa-rocket"></i> Get Started Free
+                    </button>
+                    <button class="btn btn-ghost" onclick="goTo('contact.html')">
+                        <i class="fas fa-envelope"></i> Contact Us
+                    </button>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-brand">
+                <div class="logo" style="font-size:1.3rem;">Gas<span>Track</span></div>
+                <p>Fast, reliable, and transparent LPG delivery for homes and businesses.</p>
+                <div class="footer-social">
+                    <a href="#"><i class="fab fa-facebook"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-whatsapp"></i></a>
+                </div>
+            </div>
+            <div class="footer-links">
+                <h4>Quick Links</h4>
+                <a href="index.html">Home</a>
+                <a href="about.html">About Us</a>
+                <a href="contact.html">Contact</a>
+                <a href="login.html">Login</a>
+                <a href="register.html">Register</a>
+            </div>
+            <div class="footer-links">
+                <h4>Products</h4>
+                <a href="register.html">5 kg Cylinder</a>
+                <a href="register.html">14.2 kg Cylinder</a>
+                <a href="register.html">19 kg Commercial</a>
+                <a href="track.html">Track Order</a>
+            </div>
+            <div class="footer-links">
+                <h4>Support</h4>
+                <a href="contact.html">Help Center</a>
+                <a href="contact.html">Report Issue</a>
+                <a href="#">Safety Guidelines</a>
+                <a href="#">Privacy Policy</a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 Gas Track. Built for KCC Hackathon. All rights reserved.</p>
+            <p>Made with <i class="fas fa-fire" style="color:var(--flame-1);"></i> in India</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script>
+        function toggleMobileMenu() {
+            document.getElementById('mobileMenu').classList.toggle('open');
+        }
+    </script>
+</body>
+</html>

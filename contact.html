@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us - Gas Track</title>
+    <meta name="description" content="Contact Gas Track — we're here to help 24/7. Reach us by phone, email, or the contact form.">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-content">
+            <div class="logo">
+                <img src="logo.PNG" alt="Logo" class="nav-logo">
+                Gas<span>Track</span>
+            </div>
+            <div class="nav-links">
+                <a href="index.html" class="nav-link">Home</a>
+                <a href="about.html" class="nav-link">About</a>
+                <a href="contact.html" class="nav-link active">Contact</a>
+                <a href="login.html" class="nav-btn">Login</a>
+                <a href="register.html" class="nav-btn nav-btn-outline">Register</a>
+            </div>
+            <button class="hamburger" id="hamburger" onclick="toggleMobileMenu()">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+        <div class="mobile-menu" id="mobileMenu">
+            <a href="index.html" class="nav-link">Home</a>
+            <a href="about.html" class="nav-link">About</a>
+            <a href="contact.html" class="nav-link active">Contact</a>
+            <a href="login.html" class="nav-link">Login</a>
+            <a href="register.html" class="nav-link">Register</a>
+        </div>
+    </nav>
+
+    <!-- ── Page Hero ── -->
+    <section class="page-hero">
+        <div class="container">
+            <div class="page-hero-content">
+                <div class="hero-badge"><i class="fas fa-headset"></i> We're Here 24/7</div>
+                <h1>Get in <span class="gradient-text">Touch</span></h1>
+                <p>Have a question, complaint, or feedback? Our team is always ready to help you.</p>
+            </div>
+        </div>
+    </section>
+
+    <div class="container">
+
+        <!-- ── Contact Info Bars ── -->
+        <section class="contact-info-bars">
+            <div class="contact-bar">
+                <div class="contact-bar-icon"><i class="fas fa-phone"></i></div>
+                <div class="contact-bar-text">
+                    <strong>Call Us</strong>
+                    <span>1800-123-4567 (Toll Free)</span>
+                </div>
+            </div>
+            <div class="contact-bar">
+                <div class="contact-bar-icon"><i class="fas fa-envelope"></i></div>
+                <div class="contact-bar-text">
+                    <strong>Email Us</strong>
+                    <span>support@gastrack.in</span>
+                </div>
+            </div>
+            <div class="contact-bar">
+                <div class="contact-bar-icon"><i class="fab fa-whatsapp"></i></div>
+                <div class="contact-bar-text">
+                    <strong>WhatsApp</strong>
+                    <span>+91 98765 43210</span>
+                </div>
+            </div>
+            <div class="contact-bar">
+                <div class="contact-bar-icon"><i class="fas fa-clock"></i></div>
+                <div class="contact-bar-text">
+                    <strong>Working Hours</strong>
+                    <span>24 × 7, All Days</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- ── Main Contact Layout ── -->
+        <section class="contact-main">
+            <!-- Form -->
+            <div class="contact-form-card">
+                <h2><i class="fas fa-paper-plane" style="color:var(--flame-1);"></i> Send a Message</h2>
+                <p style="color:var(--text-light);margin-bottom:2rem;">Fill the form below and we'll get back to you within 2 hours.</p>
+                <form id="contactForm" onsubmit="handleContactSubmit(event)">
+                    <div class="contact-form-row">
+                        <div class="form-group">
+                            <label>Your Name *</label>
+                            <div class="input-group">
+                                <i class="fas fa-user"></i>
+                                <input type="text" class="form-input" id="contactName" placeholder="John Doe" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Email Address *</label>
+                            <div class="input-group">
+                                <i class="fas fa-envelope"></i>
+                                <input type="email" class="form-input" id="contactEmail" placeholder="john@example.com" required>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="contact-form-row">
+                        <div class="form-group">
+                            <label>Phone Number</label>
+                            <div class="input-group">
+                                <i class="fas fa-phone"></i>
+                                <input type="tel" class="form-input" id="contactPhone" placeholder="9876543210">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Subject *</label>
+                            <div class="input-group">
+                                <i class="fas fa-tag"></i>
+                                <select class="form-input" id="contactSubject" required>
+                                    <option value="">Select a topic</option>
+                                    <option value="order">Order Issue</option>
+                                    <option value="delivery">Delivery Problem</option>
+                                    <option value="refund">Refund / Payment</option>
+                                    <option value="tracking">Tracking Help</option>
+                                    <option value="account">Account Support</option>
+                                    <option value="other">Other</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Order ID (if applicable)</label>
+                        <div class="input-group">
+                            <i class="fas fa-hashtag"></i>
+                            <input type="text" class="form-input" id="contactOrderId" placeholder="e.g. ORD-20260410-001">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Message *</label>
+                        <textarea class="form-input contact-textarea" id="contactMessage" rows="5" placeholder="Describe your issue or question in detail..." required></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary" style="width:100%;justify-content:center;padding:14px;">
+                        <i class="fas fa-paper-plane"></i> Send Message
+                    </button>
+                    <div id="contactSuccess" class="contact-success" style="display:none;">
+                        <i class="fas fa-check-circle"></i>
+                        <strong>Message Sent!</strong> We'll reply to your email within 2 hours.
+                    </div>
+                </form>
+            </div>
+
+            <!-- Sidebar -->
+            <div class="contact-sidebar">
+                <div class="contact-sidebar-card">
+                    <h3><i class="fas fa-question-circle" style="color:var(--flame-1);"></i> Quick Help</h3>
+                    <div class="faq-list">
+                        <div class="faq-item">
+                            <details>
+                                <summary>How do I track my order?</summary>
+                                <p>Go to <a href="track.html" class="auth-link">Track Order</a>, enter your Order ID (e.g. ORD-20260410-001) and click Track. Your delivery will appear on the live map.</p>
+                            </details>
+                        </div>
+                        <div class="faq-item">
+                            <details>
+                                <summary>When will my order be delivered?</summary>
+                                <p>Most orders are delivered within 4–6 hours. Same-day delivery is available if you order before 2 PM.</p>
+                            </details>
+                        </div>
+                        <div class="faq-item">
+                            <details>
+                                <summary>How do I cancel an order?</summary>
+                                <p>Log in to your dashboard, go to My Orders, and select Cancel. Orders can be cancelled before "In Progress" status.</p>
+                            </details>
+                        </div>
+                        <div class="faq-item">
+                            <details>
+                                <summary>What payment methods are accepted?</summary>
+                                <p>We accept UPI, Debit/Credit cards, Net Banking, and Cash on Delivery.</p>
+                            </details>
+                        </div>
+                        <div class="faq-item">
+                            <details>
+                                <summary>Is Gas Track available in my city?</summary>
+                                <p>We currently serve 12 cities: Delhi, Noida, Gurugram, Mumbai, Pune, Bengaluru, Chennai, Hyderabad, Jaipur, Lucknow, Ahmedabad, and Kolkata.</p>
+                            </details>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="contact-sidebar-card" style="margin-top:1.5rem;">
+                    <h3><i class="fas fa-map-marker-alt" style="color:var(--flame-1);"></i> Our Office</h3>
+                    <p style="color:var(--text-light);line-height:1.8;">
+                        <strong style="color:var(--text);">Gas Track HQ</strong><br>
+                        42, Tech Park Tower,<br>
+                        Sector 18, Noida — 201301<br>
+                        Uttar Pradesh, India
+                    </p>
+                    <div class="office-map-placeholder">
+                        <i class="fas fa-map"></i>
+                        <span>View on Google Maps</span>
+                    </div>
+                </div>
+
+                <div class="contact-sidebar-card emergency-card" style="margin-top:1.5rem;">
+                    <div class="emergency-icon"><i class="fas fa-exclamation-triangle"></i></div>
+                    <h3>Gas Leak Emergency?</h3>
+                    <p>If you smell gas or suspect a leak, call our emergency hotline immediately:</p>
+                    <a class="btn btn-primary" href="tel:18001234567" style="margin-top:1rem;display:flex;justify-content:center;">
+                        <i class="fas fa-phone"></i> 1800-123-4567
+                    </a>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-brand">
+                <div class="logo" style="font-size:1.3rem;">Gas<span>Track</span></div>
+                <p>Fast, reliable, and transparent LPG delivery for homes and businesses.</p>
+                <div class="footer-social">
+                    <a href="#"><i class="fab fa-facebook"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-whatsapp"></i></a>
+                </div>
+            </div>
+            <div class="footer-links">
+                <h4>Quick Links</h4>
+                <a href="index.html">Home</a>
+                <a href="about.html">About Us</a>
+                <a href="contact.html">Contact</a>
+                <a href="login.html">Login</a>
+                <a href="register.html">Register</a>
+            </div>
+            <div class="footer-links">
+                <h4>Products</h4>
+                <a href="register.html">5 kg Cylinder</a>
+                <a href="register.html">14.2 kg Cylinder</a>
+                <a href="register.html">19 kg Commercial</a>
+                <a href="track.html">Track Order</a>
+            </div>
+            <div class="footer-links">
+                <h4>Support</h4>
+                <a href="contact.html">Help Center</a>
+                <a href="contact.html">Report Issue</a>
+                <a href="#">Safety Guidelines</a>
+                <a href="#">Privacy Policy</a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 Gas Track. Built for KCC Hackathon. All rights reserved.</p>
+            <p>Made with <i class="fas fa-fire" style="color:var(--flame-1);"></i> in India</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script>
+        function toggleMobileMenu() {
+            document.getElementById('mobileMenu').classList.toggle('open');
+        }
+        function handleContactSubmit(e) {
+            e.preventDefault();
+            document.getElementById('contactSuccess').style.display = 'flex';
+            document.getElementById('contactForm').reset();
+            setTimeout(() => {
+                document.getElementById('contactSuccess').style.display = 'none';
+            }, 5000);
+        }
+    </script>
+</body>
+</html>

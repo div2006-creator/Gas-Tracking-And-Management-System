@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Gas Track</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-content">
+            <div class="logo">
+                <img src="logo.PNG" alt="Logo" class="nav-logo">
+                Gas<span>Track</span>
+            </div>
+            <div class="nav-links">
+                <span id="userGreeting" class="user-greeting"></span>
+                <button class="nav-btn" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Logout</button>
+            </div>
+        </div>
+    </nav>
+
+    <div class="dashboard-wrapper">
+        <aside class="sidebar">
+            <div class="sidebar-brand">Navigation</div>
+            <div class="sidebar-menu">
+                <a href="#" onclick="showSection('overview')" class="menu-item active" data-section="overview">
+                    <i class="fas fa-chart-line"></i> Overview
+                </a>
+                <a href="#" onclick="showSection('orders')" class="menu-item" data-section="orders">
+                    <i class="fas fa-box"></i> My Orders
+                </a>
+                <a href="#" onclick="showSection('track')" class="menu-item" data-section="track">
+                    <i class="fas fa-map-location-dot"></i> Live Track
+                </a>
+                <a href="#" onclick="showSection('profile')" class="menu-item" data-section="profile">
+                    <i class="fas fa-user-circle"></i> Profile
+                </a>
+                <div id="deliveryMenu" style="display:none;">
+                    <div class="sidebar-divider"></div>
+                    <div class="sidebar-section-label">Delivery Agent</div>
+                    <a href="#" onclick="showSection('delivery-home')" class="menu-item" data-section="delivery-home">
+                        <i class="fas fa-handshake"></i> My Deliveries
+                    </a>
+                    <a href="#" onclick="showSection('new-orders')" class="menu-item" data-section="new-orders">
+                        <i class="fas fa-inbox"></i> New Orders
+                        <span id="newOrdersBadge" class="badge-count" style="display:none;">0</span>
+                    </a>
+                    <a href="#" onclick="showSection('delivery-history')" class="menu-item" data-section="delivery-history">
+                        <i class="fas fa-history"></i> History
+                    </a>
+                </div>
+                <div id="adminMenu" style="display:none;">
+                    <div class="sidebar-divider"></div>
+                    <div class="sidebar-section-label">Admin</div>
+                    <a href="#" onclick="showSection('manage-orders')" class="menu-item" data-section="manage-orders">
+                        <i class="fas fa-tasks"></i> Manage Orders
+                    </a>
+                    <a href="#" onclick="showSection('manage-users')" class="menu-item" data-section="manage-users">
+                        <i class="fas fa-users"></i> Users
+                    </a>
+                    <a href="#" onclick="showSection('analytics')" class="menu-item" data-section="analytics">
+                        <i class="fas fa-chart-bar"></i> Analytics
+                    </a>
+                </div>
+            </div>
+        </aside>
+
+        <main class="main-content">
+
+            <!-- ── Overview ── -->
+            <section id="overview" class="section active">
+                <div class="section-header">
+                    <h2>Dashboard Overview</h2>
+                    <p>Welcome back! Here's what's happening with your deliveries.</p>
+                </div>
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon orange"><i class="fas fa-box"></i></div>
+                        <div class="stat-info"><h3 id="totalOrders">0</h3><p>Total Orders</p></div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon blue"><i class="fas fa-truck"></i></div>
+                        <div class="stat-info"><h3 id="inProgress">0</h3><p>In Progress</p></div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon green"><i class="fas fa-check-circle"></i></div>
+                        <div class="stat-info"><h3 id="completed">0</h3><p>Completed</p></div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon red"><i class="fas fa-clock"></i></div>
+                        <div class="stat-info"><h3 id="pending">0</h3><p>Pending</p></div>
+                    </div>
+                </div>
+                <div class="quick-actions">
+                    <h3>Quick Actions</h3>
+                    <div class="actions-grid">
+                        <button class="action-btn" onclick="showSection('orders')">
+                            <i class="fas fa-plus-circle"></i> New Order
+                        </button>
+                        <button class="action-btn" onclick="showSection('track')">
+                            <i class="fas fa-satellite-dish"></i> Live Track
+                        </button>
+                        <button class="action-btn" onclick="showSection('profile')">
+                            <i class="fas fa-user-edit"></i> My Profile
+                        </button>
+                        <button class="action-btn" onclick="window.location.href='index.html'">
+                            <i class="fas fa-home"></i> Home
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ══════════ DELIVERY AGENT SECTIONS ══════════ -->
+
+            <!-- ── Delivery Home ── -->
+            <section id="delivery-home" class="section">
+                <div class="section-header">
+                    <h2><i class="fas fa-truck-fast" style="color:var(--flame-1);margin-right:.5rem;"></i> Delivery Agent Dashboard</h2>
+                    <p>Manage your shifts, view assigned orders, and track your earnings</p>
+                </div>
+
+                <!-- Shift Toggle -->
+                <div class="shift-banner" id="shiftBanner">
+                    <div class="shift-info">
+                        <div class="shift-status-dot" id="shiftDot"></div>
+                        <div>
+                            <strong id="shiftLabel">You are OFF DUTY</strong>
+                            <p id="shiftSubLabel">Toggle to start your delivery shift</p>
+                        </div>
+                    </div>
+                    <label class="shift-toggle">
+                        <input type="checkbox" id="shiftToggle" onchange="toggleShift()">
+                        <span class="shift-slider"></span>
+                    </label>
+                </div>
+
+                <!-- Delivery Stats -->
+                <div class="stats-grid" style="margin-bottom:2rem;">
+                    <div class="stat-card">
+                        <div class="stat-icon orange"><i class="fas fa-inbox"></i></div>
+                        <div class="stat-info"><h3 id="dvNewCount">0</h3><p>New Orders</p></div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon blue"><i class="fas fa-truck-moving"></i></div>
+                        <div class="stat-info"><h3 id="dvActiveCount">0</h3><p>Active Deliveries</p></div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon green"><i class="fas fa-circle-check"></i></div>
+                        <div class="stat-info"><h3 id="dvDoneCount">0</h3><p>Completed Today</p></div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon" style="background:linear-gradient(135deg,#ffd700,#ff8c00);"><i class="fas fa-indian-rupee-sign"></i></div>
+                        <div class="stat-info"><h3 id="dvEarnings">₹0</h3><p>Today's Earnings</p></div>
+                    </div>
+                </div>
+
+                <!-- Active Delivery Card -->
+                <div id="activeDeliveryCard" style="display:none;" class="active-delivery-card">
+                    <div class="active-delivery-header">
+                        <div class="live-badge"><span class="pulse-dot"></span> Active Delivery</div>
+                        <span id="activeOrderId" class="order-id-pill"></span>
+                    </div>
+                    <div class="active-delivery-body">
+                        <div class="active-delivery-info">
+                            <div class="info-row"><i class="fas fa-user"></i><div><span>Customer</span><strong id="activeCustomer"></strong></div></div>
+                            <div class="info-row"><i class="fas fa-map-marker-alt"></i><div><span>Address</span><strong id="activeAddress"></strong></div></div>
+                            <div class="info-row"><i class="fas fa-fire-flame-curved"></i><div><span>Product</span><strong id="activeProduct"></strong></div></div>
+                            <div class="info-row"><i class="fas fa-phone"></i><div><span>Phone</span><strong id="activePhone"></strong></div></div>
+                        </div>
+                        <div class="active-delivery-actions">
+                            <button class="btn btn-primary" onclick="markInProgress()" id="btnInProgress">
+                                <i class="fas fa-route"></i> Start Delivery
+                            </button>
+                            <button class="btn" style="background:linear-gradient(135deg,#00d68f,#00a86b);color:#fff;" onclick="markDelivered()" id="btnDelivered">
+                                <i class="fas fa-circle-check"></i> Mark Delivered
+                            </button>
+                            <button class="btn btn-secondary" onclick="showSection('track')" style="font-size:.85rem;">
+                                <i class="fas fa-map"></i> Live Map
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Quick Tips -->
+                <div class="delivery-tips">
+                    <h3 style="color:var(--text-light);font-size:.85rem;text-transform:uppercase;letter-spacing:1px;margin-bottom:1rem;">Agent Tips</h3>
+                    <div class="tips-grid">
+                        <div class="tip-card"><i class="fas fa-bell"></i><p>Check New Orders tab regularly for incoming customer orders</p></div>
+                        <div class="tip-card"><i class="fas fa-shield-halved"></i><p>Always verify cylinder seal before handover to customer</p></div>
+                        <div class="tip-card"><i class="fas fa-route"></i><p>Use the Live Map to navigate to customer delivery address</p></div>
+                        <div class="tip-card"><i class="fas fa-star"></i><p>Polite service earns better ratings and bonus rewards!</p></div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ── New Orders (Customer Queue) ── -->
+            <section id="new-orders" class="section">
+                <div class="section-header">
+                    <h2><i class="fas fa-inbox" style="color:var(--flame-1);margin-right:.5rem;"></i> New Customer Orders</h2>
+                    <p>All pending orders from customers — accept one to start delivery</p>
+                </div>
+                <div class="filter-bar">
+                    <button class="filter-chip active" onclick="filterDeliveryQueue('all', this)">All</button>
+                    <button class="filter-chip" onclick="filterDeliveryQueue('pending', this)">Pending</button>
+                    <button class="filter-chip" onclick="filterDeliveryQueue('assigned', this)">Assigned</button>
+                    <button class="filter-chip" onclick="filterDeliveryQueue('in-progress', this)">In Progress</button>
+                    <button class="filter-chip" onclick="refreshDeliveryQueue()"><i class="fas fa-rotate-right"></i> Refresh</button>
+                </div>
+                <div id="deliveryQueue" class="list-container" style="margin-top:1rem;"></div>
+            </section>
+
+            <!-- ── Delivery History ── -->
+            <section id="delivery-history" class="section">
+                <div class="section-header">
+                    <h2><i class="fas fa-history" style="color:var(--flame-1);margin-right:.5rem;"></i> Delivery History</h2>
+                    <p>All orders you have completed as a delivery agent</p>
+                </div>
+                <div id="cleanupNotice" style="display:none;"></div>
+                <div id="deliveryHistoryList" class="list-container"></div>
+            </section>
+
+            <!-- ══════════ / DELIVERY AGENT SECTIONS ══════════ -->
+
+            <!-- ── Orders ── -->
+            <section id="orders" class="section">
+                <div class="section-header">
+                    <h2>My Orders</h2>
+                    <p>Manage and view all your LPG orders</p>
+                </div>
+                <button class="btn btn-primary" onclick="showOrderForm()" style="margin-bottom:1.5rem;">
+                    <i class="fas fa-plus"></i> Place New Order
+                </button>
+                <div id="orderForm" class="form-container" style="display:none;">
+                    <h3><i class="fas fa-shopping-cart"></i> Place New Order</h3>
+                    <form onsubmit="handlePlaceOrder(event)">
+                        <div class="form-group">
+                            <label>Cylinder Type</label>
+                            <select id="cylinderType" required>
+                                <option value="">Select cylinder</option>
+                                <option value="5kg">5 kg — ₹450</option>
+                                <option value="14.2kg">14.2 kg — ₹950</option>
+                                <option value="19kg">19 kg — ₹1,050</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Quantity</label>
+                            <input type="number" id="quantity" min="1" value="1" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Delivery Address</label>
+                            <input type="text" id="deliveryAddress" placeholder="Enter full address" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Preferred Date</label>
+                            <input type="date" id="deliveryDate" required>
+                        </div>
+                        <div style="display:flex;gap:1rem;flex-wrap:wrap;">
+                            <button type="submit" class="btn btn-primary"><i class="fas fa-check"></i> Place Order</button>
+                            <button type="button" class="btn btn-secondary" onclick="hideOrderForm()">Cancel</button>
+                        </div>
+                    </form>
+                </div>
+                <div class="orders-list">
+                    <h3 style="color:var(--text-light);font-size:0.85rem;text-transform:uppercase;letter-spacing:1px;margin-bottom:1rem;">Order History</h3>
+                    <div id="customerOrders" class="list-container"></div>
+                </div>
+            </section>
+
+            <!-- ── Live Track ── -->
+            <section id="track" class="section">
+                <div class="section-header">
+                    <h2><i class="fas fa-satellite-dish" style="color:var(--flame-1);margin-right:0.5rem;"></i> Live Delivery Tracking</h2>
+                    <p>Enter your order ID to see your delivery on the map in real-time</p>
+                </div>
+                <div class="track-section-inner">
+                    <div class="track-input-panel">
+                        <h3><i class="fas fa-search"></i> Find Order</h3>
+                        <div class="form-group">
+                            <label>Order ID</label>
+                            <input type="text" id="trackOrderId" placeholder="e.g. ORD-20260410-001" id="trackOrderId">
+                        </div>
+                        <button class="btn btn-primary" style="width:100%;justify-content:center;" onclick="trackOrder()">
+                            <i class="fas fa-map-marker-alt"></i> Track on Map
+                        </button>
+                        <div id="trackResult" class="track-result" style="display:none; margin-top:1.5rem;"></div>
+                    </div>
+                    <div class="map-wrapper">
+                        <div class="map-header">
+                            <h3><i class="fas fa-map"></i> Delivery Map</h3>
+                            <span class="live-badge"><span class="pulse-dot"></span> Live</span>
+                        </div>
+                        <div id="deliveryMap"></div>
+                        <div id="mapPlaceholder" class="map-placeholder">
+                            <i class="fas fa-map-location-dot"></i>
+                            <p>Enter an Order ID to see live tracking</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ── Profile ── -->
+            <section id="profile" class="section">
+                <div class="section-header">
+                    <h2>My Profile</h2>
+                    <p>View and manage your account information</p>
+                </div>
+                <div class="profile-container">
+                    <div class="profile-info">
+                        <div class="info-group">
+                            <label>Full Name</label>
+                            <input type="text" id="profileName" readonly>
+                        </div>
+                        <div class="info-group">
+                            <label>Aadhaar Number</label>
+                            <input type="text" id="profileAadhaar" readonly>
+                        </div>
+                        <div class="info-group">
+                            <label>Email Address</label>
+                            <input type="email" id="profileEmail" readonly>
+                        </div>
+                        <div class="info-group">
+                            <label>Phone Number</label>
+                            <input type="tel" id="profilePhone" readonly>
+                        </div>
+                        <div class="info-group">
+                            <label>Delivery Address</label>
+                            <input type="text" id="profileAddress" readonly>
+                        </div>
+                        <div class="info-group">
+                            <label>Role</label>
+                            <input type="text" id="profileRole" readonly>
+                        </div>
+                        <div class="info-group" style="display:flex;gap:1rem;flex-wrap:wrap;">
+                            <button id="editProfileBtn" class="btn btn-primary" onclick="editProfile()"><i class="fas fa-edit"></i> Edit Profile</button>
+                            <button id="saveProfileBtn" class="btn btn-primary" onclick="saveProfile()" style="display:none;"><i class="fas fa-save"></i> Save Changes</button>
+                            <button id="cancelProfileBtn" class="btn btn-secondary" onclick="cancelProfileEdit()" style="display:none;">Cancel</button>
+                        </div>
+                        <div id="profileStatus" class="info-message" style="display:none; margin-top:1rem; padding:1rem 1.25rem; text-align:left;"></div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ── Admin: Manage Orders ── -->
+            <section id="manage-orders" class="section">
+                <div class="section-header">
+                    <h2>Manage Orders</h2>
+                    <p>View and update all customer orders</p>
+                </div>
+                <div class="filter-group">
+                    <select id="statusFilter" onchange="filterOrders()">
+                        <option value="">All Orders</option>
+                        <option value="pending">Pending</option>
+                        <option value="assigned">Assigned</option>
+                        <option value="in-progress">In Progress</option>
+                        <option value="completed">Completed</option>
+                        <option value="cancelled">Cancelled</option>
+                    </select>
+                </div>
+                <div id="allOrdersList" class="list-container"></div>
+            </section>
+
+            <!-- ── Admin: Users ── -->
+            <section id="manage-users" class="section">
+                <div class="section-header">
+                    <h2>Manage Users</h2>
+                    <p>Add, view, and remove users from the platform</p>
+                </div>
+                <button class="btn btn-primary" onclick="showAddUserForm()" style="margin-bottom:1.5rem;">
+                    <i class="fas fa-user-plus"></i> Add User
+                </button>
+                <div id="addUserForm" class="form-container" style="display:none;">
+                    <h3><i class="fas fa-user-plus"></i> Add New User</h3>
+                    <form onsubmit="handleAddUser(event)">
+                        <div class="form-group">
+                            <label>Full Name</label>
+                            <input type="text" id="newUserName" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Email</label>
+                            <input type="email" id="newUserEmail" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Phone</label>
+                            <input type="tel" id="newUserPhone" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Role</label>
+                            <select id="newUserRole" required>
+                                <option value="customer">Customer</option>
+                                <option value="delivery">Delivery Agent</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Password</label>
+                            <input type="password" id="newUserPassword" required>
+                        </div>
+                        <div style="display:flex;gap:1rem;">
+                            <button type="submit" class="btn btn-primary"><i class="fas fa-plus"></i> Add User</button>
+                            <button type="button" class="btn btn-secondary" onclick="hideAddUserForm()">Cancel</button>
+                        </div>
+                    </form>
+                </div>
+                <div id="usersList" class="list-container"></div>
+            </section>
+
+            <!-- ── Admin: Analytics ── -->
+            <section id="analytics" class="section">
+                <div class="section-header">
+                    <h2>Analytics</h2>
+                    <p>Platform performance and delivery statistics</p>
+                </div>
+                <div class="analytics-grid">
+                    <div class="analytics-card"><h3>Customers</h3><p id="totalCustomers" class="big-number">0</p></div>
+                    <div class="analytics-card"><h3>Delivery Staff</h3><p id="totalDelivery" class="big-number">0</p></div>
+                    <div class="analytics-card"><h3>Total Orders</h3><p id="analyticsTotal" class="big-number">0</p></div>
+                    <div class="analytics-card"><h3>Completion Rate</h3><p id="completionRate" class="big-number">0%</p></div>
+                </div>
+
+                <!-- Revenue Summary Cards -->
+                <div class="analytics-grid" style="margin-bottom: 2rem;">
+                    <div class="analytics-card" style="text-align: center; border-top-color: var(--success);">
+                        <h3>Expected Monthly Revenue</h3>
+                        <p id="monthlyRevenue" class="big-number">₹0</p>
+                        <small style="color: var(--text-light); font-size: 0.8rem;">Projected based on current month performance</small>
+                    </div>
+                    <div class="analytics-card" style="text-align: center; border-top-color: var(--info);">
+                        <h3>Total Revenue</h3>
+                        <p id="totalRevenue" class="big-number">₹0</p>
+                        <small style="color: var(--text-light); font-size: 0.8rem;">All-time revenue from all orders</small>
+                    </div>
+                </div>
+
+                <!-- Revenue Breakdown -->
+                <div class="analytics-card" style="margin-top:1rem;">
+                    <div id="revenueBreakdown">
+                        <h4 style="color: var(--text); margin-bottom: 1rem;">Cylinder Revenue Analysis</h4>
+                        <p style="color: var(--text-light); font-size: 0.9rem;">Loading revenue data...</p>
+                    </div>
+                </div>
+            </section>
+
+        </main>
+    </div>
+
+    <footer class="footer">
+        <p>&copy; 2026 Gas Track. All rights reserved.</p>
+    </footer>
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>

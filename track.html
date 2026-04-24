@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Track Order - Gas Track</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-content">
+            <div class="logo">
+                <img src="logo.PNG" alt="Logo" class="nav-logo">
+                Gas<span>Track</span>
+            </div>
+            <div class="nav-links">
+                <a href="index.html" class="nav-link">Home</a>
+                <a href="dashboard.html" class="nav-btn">Dashboard</a>
+                <button class="nav-btn" onclick="logout()" style="background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.2);box-shadow:none;">Logout</button>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <section class="track-hero">
+            <div class="hero-content">
+                <h1><i class="fas fa-satellite-dish" style="color:var(--flame-1);"></i> Live Order Tracking</h1>
+                <p>Enter your order ID below to see your delivery on the map in real-time</p>
+            </div>
+        </section>
+
+        <section class="track-page">
+            <div class="track-card">
+                <div class="card-header">
+                    <h2><i class="fas fa-map-marker-alt" style="color:var(--flame-1);"></i> Order Tracking</h2>
+                    <span class="live-badge"><span class="pulse-dot"></span> Live</span>
+                </div>
+
+                <div class="track-search">
+                    <div class="search-box">
+                        <div class="input-group">
+                            <i class="fas fa-hashtag"></i>
+                            <input type="text" id="pageTrackOrderId" placeholder="Enter Order ID (e.g. ORD-20260410-001)">
+                        </div>
+                        <button class="track-btn" onclick="pageTrack()">
+                            <i class="fas fa-search"></i> Track Order
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Map always visible -->
+                <div class="map-wrapper" style="margin-top:1.25rem;">
+                    <div class="map-header">
+                        <h3><i class="fas fa-map"></i> Delivery Map</h3>
+                        <span class="live-badge"><span class="pulse-dot"></span> Live GPS</span>
+                    </div>
+                    <div id="trackPageMap"></div>
+                </div>
+
+                <div id="pageTrackResult" class="track-info-container" style="display:none;"></div>
+
+                <div id="noOrderMessage" class="info-message" style="display:none;">
+                    <div class="message-content">
+                        <i class="fas fa-map-location-dot"></i>
+                        <h3>Ready to Track</h3>
+                        <p>Enter your Order ID above to see live tracking on the map</p>
+                    </div>
+                </div>
+                <div id="orderNotFoundMessage" class="error-message" style="display:none;">
+                    <div class="message-content">
+                        <i class="fas fa-exclamation-circle"></i>
+                        <h3>Order Not Found</h3>
+                        <p id="notFoundText">Please check your Order ID and try again</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <footer class="footer">
+        <p>&copy; 2026 Gas Track. All rights reserved.</p>
+    </footer>
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
