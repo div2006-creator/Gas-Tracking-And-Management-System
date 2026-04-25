@@ -121,12 +121,6 @@ This project demonstrates:
 
 ---
 
-## 👨‍💻 Author
-
-**Divyansh Sharma**
-
----
-
 ## ⭐ Conclusion
 
 The Smart LPG System aims to create a **complete ecosystem** connecting users, admins, and delivery agents, making LPG distribution **smart, efficient, and transparent**.
